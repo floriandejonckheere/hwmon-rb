@@ -5,7 +5,7 @@ module HWMon
     class << self
       # Array of monitors to execute
       def monitors
-        %w(temperature fan)
+        %w[temperature fan]
       end
 
       # Time between executions in seconds

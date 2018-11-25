@@ -6,7 +6,7 @@ require 'hwmon/monitors'
 module HWMon
   class Monitor
     def self.monitor!
-      self.new.execute
+      new.execute
     end
 
     def execute
@@ -25,7 +25,7 @@ module HWMon
 
     # Write result entry
     def write(entry)
-      exists = File.exists? HWMon::Config.output
+      exists = File.exist? HWMon::Config.output
 
       result = entry.keys.sort.map { |k| entry[k] }.join(',')
 
