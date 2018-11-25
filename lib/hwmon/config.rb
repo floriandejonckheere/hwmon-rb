@@ -14,7 +14,7 @@ module HWMon
 
       # Time between executions in seconds
       def sleep_time
-        1
+        3
       end
 
       # File to append results to
