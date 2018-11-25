@@ -13,7 +13,7 @@ module HWMon
       loop do
         entry = {}
 
-        monitors.each { |monitor| entry.merge! monitor.call }
+        HWMon::Config.monitors.each { |monitor| entry.merge! monitor.call }
 
         write entry
 
@@ -32,13 +32,6 @@ module HWMon
       File.open(HWMon::Config.output, 'a') do |f|
         f.write "timestamp,#{entry.keys.sort.join(',')}\n" unless exists
         f.write "#{Time.now.to_i},#{result}\n"
-      end
-    end
-
-    # Constantize monitor classes
-    def monitors
-      @monitors ||= HWMon::Config.monitors.map do |monitor|
-        HWMon::Monitors.const_get(monitor.capitalize)
       end
     end
   end
