@@ -4,7 +4,13 @@ module HWMon
   module Monitors
     class Temperature < ApplicationMonitor
       def call
-        3
+        {
+          :cpu => 0,
+          :core0 => 0,
+          :core1 => 0,
+          :core2 => 0,
+          :core3 => 0
+        }
       end
     end
   end

@@ -6,32 +6,40 @@ require 'hwmon/monitors'
 module HWMon
   class Monitor
     def self.monitor!
-      monitor = self.new
+      self.new.execute
+    end
 
+    def execute
       loop do
-        monitor.execute
+        entry = {}
+
+        monitors.each { |monitor| entry.merge! monitor.call }
+
+        write entry
+
         sleep HWMon::Config.sleep_time
       end
     end
 
-    def execute
-      monitors.each do |monitor|
-        result = monitor.call
+    protected
 
-        puts "#{monitor.to_s}: #{result}"
+    # Write result entry
+    def write(entry)
+      exists = File.exists? HWMon::Config.output
+
+      result = entry.keys.sort.map { |k| entry[k] }.join(',')
+
+      File.open(HWMon::Config.output, 'a') do |f|
+        f.write "timestamp,#{entry.keys.sort.join(',')}\n" unless exists
+        f.write "#{Time.now.to_i},#{result}\n"
       end
     end
 
+    # Constantize monitor classes
     def monitors
-      return @monitors if @monitors
-
-      @monitors = []
-
-      HWMon::Config.monitors.each do |monitor|
-        @monitors << HWMon::Monitors.const_get(monitor.capitalize)
+      @monitors ||= HWMon::Config.monitors.map do |monitor|
+        HWMon::Monitors.const_get(monitor.capitalize)
       end
-
-      @monitors
     end
   end
 end
