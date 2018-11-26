@@ -20,7 +20,7 @@ module HWMon
 
       # File to append results to
       def output
-        File.join Dir.pwd, 'hwmon.csv'
+        File.join Dir.pwd, 'hwmon.yml'
       end
     end
   end
