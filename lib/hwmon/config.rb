@@ -8,13 +8,14 @@ module HWMon
         [
           HWMon::Monitors::Fan,
           HWMon::Monitors::CPU::Temperature,
-          HWMon::Monitors::Disk::Temperature
+          HWMon::Monitors::Disk::Temperature,
+          HWMon::Monitors::Uptime
         ]
       end
 
       # Time between executions in seconds
       def sleep_time
-        10
+        15
       end
 
       # File to append results to
