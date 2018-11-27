@@ -21,6 +21,8 @@ module HWMon
 
     def execute
       loop do
+        puts "[#{Time.now}] Gathering data"
+
         entry = {}
 
         HWMon::Config.monitors.each { |monitor| entry.merge! monitor.call }
@@ -41,7 +43,7 @@ module HWMon
       @entry_buffer << entry
 
       # Write buffer to disk every 10 entries or 300 seconds
-      if @entry_buffer.length > 10 || (Time.now.to_i - @last_write) > 300
+      if @entry_buffer.length >= 10 || (Time.now.to_i - @last_write) > 300
         # Write buffer
         write_buffer
 
@@ -53,6 +55,8 @@ module HWMon
 
     # Hard write entry buffer
     def write_buffer
+      puts "[#{Time.now}] Writing #{@entry_buffer.length} entries to disk"
+
       if File.exist? HWMon::Config.output
         entries = YAML.load_file HWMon::Config.output
       else
