@@ -6,8 +6,8 @@ module HWMon
       class Temperature < ApplicationMonitor
         def call
           {
-            :disk0 => temp('sda') || -1,
-            :disk1 => temp('sdb') || -1
+            :disk0 => temp('sda').to_i || -1,
+            :disk1 => temp('sdb').to_i || -1
           }
         end
 
