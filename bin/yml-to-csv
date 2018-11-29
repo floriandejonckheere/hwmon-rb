@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path(File.join(__dir__, '..', 'lib'))
+
+require 'yaml'
+
+raise 'No file given' unless ARGV
+
+yaml = YAML.load_file ARGV.first
+
+puts "Loaded #{yaml.count} entries"
+
+File.open("#{ARGV.first}.csv", 'w') do |f|
+  f.write "#{yaml.first.keys.join ','}\n"
+
+  yaml.each do |entry|
+    f.write "#{entry.values.join ','}\n"
+  end
+end
