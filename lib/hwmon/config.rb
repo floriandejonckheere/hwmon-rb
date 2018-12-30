@@ -8,6 +8,7 @@ module HWMon
         [
           HWMon::Monitors::Fan,
           HWMon::Monitors::CPU::Temperature,
+          HWMon::Monitors::ACPI,
           HWMon::Monitors::Disk::Temperature,
           HWMon::Monitors::Uptime
         ]
