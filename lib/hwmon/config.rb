@@ -7,6 +7,7 @@ module HWMon
       def monitors
         [
           HWMon::Monitors::Fan,
+          HWMon::Monitors::GPU,
           HWMon::Monitors::CPU::Temperature,
           HWMon::Monitors::ACPI,
           HWMon::Monitors::Disk::Temperature,
