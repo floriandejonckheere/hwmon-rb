@@ -5,7 +5,7 @@ module HWMon
     class Fan < ApplicationMonitor
       def call
         {
-          :speed => `cat /sys/bus/platform/devices/thinkpad_hwmon/hwmon/hwmon1/fan1_input`.strip.to_i
+          :speed => `cat /sys/bus/platform/devices/thinkpad_hwmon/hwmon/hwmon?/fan1_input`.strip.to_i
         }
       end
     end
